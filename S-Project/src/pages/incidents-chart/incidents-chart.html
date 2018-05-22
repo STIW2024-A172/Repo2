@@ -1,0 +1,60 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Incidents Chart</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    
+    <ion-card-header>
+        Incident Type
+    </ion-card-header>
+
+    <ion-card-content>
+      <canvas #doughnutCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      Incidents in This Year
+    </ion-card-header>
+
+    <ion-item>
+      <ion-label [ngStyle]="{'color': '#808080'}">Incident Date</ion-label>
+      <ion-select [(ngModel)]="selectYear2" [ngModelOptions]="{standalone: true}" (ionChange)='updateData(selectYear2)'>
+        <ion-option>{{selectYear}}</ion-option>
+        <ion-option>{{selectYear-1}}</ion-option>
+        <ion-option>{{selectYear-2}}</ion-option>
+        <ion-option>{{selectYear-3}}</ion-option>
+        <ion-option>{{selectYear-4}}</ion-option>
+        <ion-option>{{selectYear-5}}</ion-option>
+        <ion-option>{{selectYear-6}}</ion-option>
+        <ion-option>{{selectYear-7}}</ion-option>
+        <ion-option>{{selectYear-8}}</ion-option>
+        <ion-option>{{selectYear-9}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-card-content>
+      <canvas #barCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      Incidents in This Five Year
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #lineCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+

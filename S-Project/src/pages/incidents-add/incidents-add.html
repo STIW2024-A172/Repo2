@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Add Incident</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form (ngSubmit)="onSubmit()">
+
+    <ion-list>
+
+      <ion-item>
+        <ion-label floating [ngStyle]="{'color': '#808080'}">Incident Type</ion-label>
+        <ion-select [(ngModel)]="inputData.inc_type" [ngModelOptions]="{standalone: true}" required>
+          <ion-option value="Reportable Incident">Reportable Incident</ion-option>
+          <ion-option value="Non-Reportable Incident">Non-Reportable Incident</ion-option>
+          <ion-option value="Property Damage">Property Damage</ion-option>
+          <ion-option value="DG Spillage">DG Spillage</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating [ngStyle]="{'color': '#808080'}">Incident Title</ion-label>
+        <ion-input [(ngModel)]="inputData.inc_title" [ngModelOptions]="{standalone: true}" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating [ngStyle]="{'color': '#808080'}">Incident Date</ion-label>
+        <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="inputData.inc_time" [ngModelOptions]="{standalone: true}"></ion-datetime>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label floating [ngStyle]="{'color': '#808080'}">Incident Time</ion-label>
+        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="inputData.inc_time" [ngModelOptions]="{standalone: true}"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating [ngStyle]="{'color': '#808080'}">Incident Description</ion-label>
+        <ion-textarea rows="5" [(ngModel)]="inputData.inc_description" [ngModelOptions]="{standalone: true}" required></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating [ngStyle]="{'color': '#808080'}">Location</ion-label>
+        <ion-input [(ngModel)]="inputData.location"  [ngModelOptions]="{standalone: true}" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating [ngStyle]="{'color': '#808080'}">Projects/Floors</ion-label>
+        <ion-input [(ngModel)]="inputData.project"  [ngModelOptions]="{standalone: true}" required></ion-input>
+      </ion-item>
+    </ion-list>
+
+      <button [disabled]="inputData.inc_type == '' || inputData.inc_title == ''||inputData.inc_description == ''|| inputData.location == '' || inputData.project == ''" ion-button type="submit" style="width:90%; margin-right:5%; margin-left:5%;">Submit</button>
+
+  </form>
+
+</ion-content>

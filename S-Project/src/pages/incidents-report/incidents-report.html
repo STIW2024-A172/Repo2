@@ -1,0 +1,130 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Incidents Report</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <div *ngIf="!selectedItem && !editItem" >
+    <ion-list *ngFor="let item of items | async">
+      <button ion-item *ngIf="item.status =='IN PROGRESS'" (click)="itemTapped(item)" [ngStyle]="{'background-color': '#ffffcc'}">
+        {{item.incident_title}}
+        <p> {{item.incident_type}}</p>
+        <p>By {{item.user_id}}HaHaHa</p>
+        
+        <div class="item-note" item-end>
+          <button ion-button style="width: 90px;" color="secondary" *ngIf="item.status =='APPROVED'">{{item.status}}</button>
+          <button ion-button style="width: 90px;" [ngStyle]="{'background-color': '#FFA500'}" *ngIf="item.status =='IN PROGRESS'">{{item.status}}</button>
+          <button ion-button style="width: 90px;" color="danger" *ngIf="item.status =='REJECTED'">{{item.status}}</button>
+          <br>
+          <p>{{item.time_report | date:'hh:mm a'}}</p>
+          <p>{{item.time_report | date:'dd MMM yyyy'}}</p>
+        </div>
+      </button>
+
+      <button ion-item *ngIf="item.status !='IN PROGRESS'" (click)="itemTapped(item)">
+          {{item.incident_title}}
+          <p> {{item.incident_type}}</p>
+          <p>By {{item.user_id}}HaHaHa</p>
+          
+          <div class="item-note" item-end>
+            <button ion-button style="width: 90px;" color="secondary" *ngIf="item.status =='APPROVED'">{{item.status}}</button>
+            <button ion-button style="width: 90px;" [ngStyle]="{'background-color': '#FFA500'}" *ngIf="item.status =='IN PROGRESS'">{{item.status}}</button>
+            <button ion-button style="width: 90px;" color="danger" *ngIf="item.status =='REJECTED'">{{item.status}}</button>
+            <br>
+            <p>{{item.time_report | date:'hh:mm a'}}</p>
+            <p>{{item.time_report | date:'dd MMM yyyy'}}</p>
+          </div>
+        </button>
+
+    </ion-list>
+  </div>
+
+    <div *ngIf="selectedItem">
+
+      <font color="#808080">Incident Title</font><br>
+      <font size="4">{{selectedItem.incident_title}}</font><br><br>
+  
+      <font color="#808080">Incident Type</font><br>
+      <font size="4">{{selectedItem.incident_type}}</font><br><br>
+    
+      <font color="#808080">Incident Time</font><br>
+      <font size="4">{{selectedItem.incident_time | date:'hh:mm a, dd MMM yyyy'}}</font><br><br>
+  
+      <font color="#808080">Incident Description</font><br>
+      <font size="4">{{selectedItem.incident_description}}</font><br><br>
+    
+      <font color="#808080">Location</font><br>
+      <font size="4">{{selectedItem.location}}</font><br><br>
+    
+      <font color="#808080">Projects/Floors</font><br>
+      <font size="4">{{selectedItem.projects_floors}}</font><br><br>
+
+      <font color="#808080">Status</font><br>
+      <font size="4" color='green' *ngIf="selectedItem.status =='APPROVED'">{{selectedItem.status}}</font>
+      <font size="4" color='#FFA500' *ngIf="selectedItem.status =='IN PROGRESS'">{{selectedItem.status}}</font>
+      <font size="4" color='red' *ngIf="selectedItem.status =='REJECTED'">{{selectedItem.status}}</font><br><br>
+
+      <button ion-button style="width: 90px;" color="secondary" (click)="approve(selectedItem.incident_title,selectedItem.key)">APPROVE</button>
+      <button ion-button style="width: 90px;" color="danger" (click)="rejectConfirm(selectedItem.incident_title,selectedItem.key)">REJECT</button>
+      <button ion-button (click)="edit(selectedItem)">Edit</button>
+
+    </div>
+
+    <div *ngIf="editItem">
+
+        <ion-list>
+
+            <ion-item>
+              <ion-label floating [ngStyle]="{'color': '#808080'}">Incident Type</ion-label>
+              <ion-select [(ngModel)]="editItem.incident_type" [ngModelOptions]="{standalone: true}" required>
+                <ion-option value="Reportable Incident">Reportable Incident</ion-option>
+                <ion-option value="Non-Reportable Incident">Non-Reportable Incident</ion-option>
+                <ion-option value="Property Damage">Property Damage</ion-option>
+                <ion-option value="DG Spillage">DG Spillage</ion-option>
+              </ion-select>
+            </ion-item>
+      
+            <ion-item>
+              <ion-label floating [ngStyle]="{'color': '#808080'}">Incident Title</ion-label>
+              <ion-input [(ngModel)]="editItem.incident_title" [ngModelOptions]="{standalone: true}" required></ion-input>
+            </ion-item>
+      
+            <ion-item>
+              <ion-label floating [ngStyle]="{'color': '#808080'}">Incident Date</ion-label>
+              <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="editItem.incident_time" [ngModelOptions]="{standalone: true}"></ion-datetime>
+            </ion-item>
+        
+            <ion-item>
+              <ion-label floating [ngStyle]="{'color': '#808080'}">Incident Time</ion-label>
+              <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="editItem.incident_time" [ngModelOptions]="{standalone: true}"></ion-datetime>
+            </ion-item>
+      
+            <ion-item>
+              <ion-label floating [ngStyle]="{'color': '#808080'}">Incident Description</ion-label>
+              <ion-textarea rows="5" [(ngModel)]="editItem.incident_description" [ngModelOptions]="{standalone: true}" required></ion-textarea>
+            </ion-item>
+      
+            <ion-item>
+              <ion-label floating [ngStyle]="{'color': '#808080'}">Location</ion-label>
+              <ion-input [(ngModel)]="editItem.location"  [ngModelOptions]="{standalone: true}" required></ion-input>
+            </ion-item>
+      
+            <ion-item>
+              <ion-label floating [ngStyle]="{'color': '#808080'}">Projects/Floors</ion-label>
+              <ion-input [(ngModel)]="editItem.projects_floors"  [ngModelOptions]="{standalone: true}" required></ion-input>
+            </ion-item>
+          </ion-list>
+  
+        <button ion-button (click)="update(editItem.key)" [disabled]="editItem.incident_type == '' || editItem.incident_title == ''|| editItem.incident_description == '' || editItem.location == '' || editItem.projects_floors == ''">Update</button>
+        <button ion-button [ngStyle]="{'background-color': '#FFA500'}" (click)="deleteConfirm(editItem.incident_title,editItem.key)">Delete</button>
+  
+      </div>
+  
+</ion-content>
